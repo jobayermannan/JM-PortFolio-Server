@@ -174,6 +174,7 @@ const introSchema = new mongoose.Schema({
 const Intro = mongoose.model("Intro", introSchema);
 
 // About Schema and Model
+// About Schema and Model
 const aboutSchema = new mongoose.Schema({
   lottieURL: {
     type: String,
@@ -187,10 +188,18 @@ const aboutSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  skills: {
-    type: Array,
-    required: true,
-  },
+  skills: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    percentage: {
+      type: Number,
+      required: true,
+      min: 0, // Minimum value of 0%
+      max: 100, // Maximum value of 100%
+    }
+  }],
 });
 
 const About = mongoose.model("About", aboutSchema);
@@ -299,4 +308,32 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", contactSchema);
 
-export { Intro, About, Experience, Project, Course, Contact };
+
+const messageSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid email address!`
+    },
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Message = mongoose.model("Message", messageSchema);
+
+export { Intro, About, Experience, Project, Course, Contact,Message };

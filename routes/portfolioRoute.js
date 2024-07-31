@@ -1,27 +1,6 @@
 
 
-// Now you can use router, Intro, About, Project, Contact, Experience, Course, and User in your module
 
-
-// // get all portfolio data
-
-// // other routes...
-
-// module.exports = router;
-
-// // update intro
-
-
-// // update about
-
-// // add experience
-
-
-
-// // update experience
-
-
-// // delete experience
 
 
 
@@ -30,7 +9,7 @@
 
 
 import { Router } from 'express';
-import { Intro, About, Project, Contact, Experience, Course } from '../model/portfolioModel.js';
+import { Intro, About, Project, Contact, Experience, Course,Message } from '../model/portfolioModel.js';
 import User from '../model/userModel.js';
  
 const router = Router();
@@ -64,6 +43,28 @@ router.get("/portfolio-data", async (req, res) => {
     res.status(500).json({ error: "Error fetching portfolio data" });
   }
 });
+
+
+
+
+router.post('/send-message', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    const newMessage = new Message({
+      name,
+      email,
+      message
+    });
+
+    await newMessage.save();
+    res.status(201).send({ success: true, message: 'Message sent successfully!' });
+  } catch (error) {
+    console.error('Failed to send message:', error);
+    res.status(500).send({ success: false, message: 'Failed to send message', error: error.message });
+  }
+});
+
+
 
 
 router.post("/update-intro", async (req, res) => {
@@ -187,7 +188,6 @@ router.post("/update-project", async (req, res) => {
 
 
 // delete project
-
 router.post("/delete-project", async (req, res) => {
   try {
     const project = await Project.findOneAndDelete({ _id: req.body._id });
