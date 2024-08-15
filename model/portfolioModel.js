@@ -174,7 +174,7 @@ const introSchema = new mongoose.Schema({
 const Intro = mongoose.model("Intro", introSchema);
 
 // About Schema and Model
-// About Schema and Model
+
 const aboutSchema = new mongoose.Schema({
   lottieURL: {
     type: String,
@@ -252,8 +252,11 @@ const projectsSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  githubLink: {
+    type: String,
+    required: true,
+  },
 });
-
 const Project = mongoose.model("Project", projectsSchema);
 
 // Courses Schema and Model

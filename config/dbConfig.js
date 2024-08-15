@@ -11,11 +11,10 @@ const dbConfig = () => {
   }
 
   mongoose.connect(dbUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 50000, // Increase timeout to 50 seconds
   })
-  .then(() => console.log("Database connected!"))
-  .catch(err => console.error("Database connection error:", err));
+    .then(() => console.log("Database connected!"))
+    .catch(err => console.error("Database connection error:", err));
 };
 
 export default dbConfig;

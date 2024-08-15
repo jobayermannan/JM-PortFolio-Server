@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 import { Router } from 'express';
 import { Intro, About, Project, Contact, Experience, Course,Message } from '../model/portfolioModel.js';
 import User from '../model/userModel.js';
